@@ -11,6 +11,7 @@ import android.os.Looper
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
+import android.widget.EditText
 
 class MainActivity : AppCompatActivity() {
 
@@ -42,8 +43,10 @@ class MainActivity : AppCompatActivity() {
             serviceConnection,
             BIND_AUTO_CREATE)
 
+        var startNumber = findViewById<EditText>(R.id.editTextText)
+
         findViewById<Button>(R.id.startButton).setOnClickListener {
-            if(isConnected) timerBinder.start(100, handler)
+            if(isConnected) timerBinder.start((startNumber.text).toString().toInt(), handler)
         }
 
         findViewById<Button>(R.id.pauseButton).setOnClickListener {
@@ -64,8 +67,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        var startNumber = findViewById<EditText>(R.id.editTextText)
         when(item.itemId){
-            R.id.action_Start ->  if(isConnected) timerBinder.start(100, handler)
+            R.id.action_Start ->  if(isConnected) timerBinder.start((startNumber.text).toString().toInt(), handler)
             R.id.activity_Pause -> if(isConnected) timerBinder.pause()
             R.id.activity_Stop -> if(isConnected) timerBinder.stop()
         }
